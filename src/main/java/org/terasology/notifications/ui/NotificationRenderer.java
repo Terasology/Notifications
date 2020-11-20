@@ -5,7 +5,7 @@ package org.terasology.notifications.ui;
 
 import org.joml.Rectanglei;
 import org.joml.Vector2i;
-import org.terasology.notifications.Notification;
+import org.terasology.notifications.model.Notification;
 import org.terasology.nui.Canvas;
 import org.terasology.nui.Color;
 import org.terasology.nui.FontColor;

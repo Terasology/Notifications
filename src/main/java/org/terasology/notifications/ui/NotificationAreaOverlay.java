@@ -4,16 +4,26 @@
 package org.terasology.notifications.ui;
 
 import org.terasology.assets.ResourceUrn;
-import org.terasology.notifications.Notification;
+import org.terasology.entitySystem.entity.EntityRef;
+import org.terasology.logic.players.LocalPlayer;
+import org.terasology.notifications.model.Notification;
+import org.terasology.notifications.model.NotificationComponent;
+import org.terasology.nui.databinding.ReadOnlyBinding;
 import org.terasology.nui.widgets.UIList;
+import org.terasology.registry.In;
 import org.terasology.rendering.nui.CoreScreenLayer;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class NotificationAreaOverlay extends CoreScreenLayer {
 
     public static final ResourceUrn ASSET_URI = new ResourceUrn("Notifications:NotificationAreaOverlay");
+
+    @In
+    LocalPlayer localPlayer;
 
     private List<Notification> notifications = new LinkedList<>();
     private UIList<Notification> notificationArea;
@@ -22,7 +32,22 @@ public class NotificationAreaOverlay extends CoreScreenLayer {
     public void initialise() {
         notificationArea = find("notificationArea", UIList.class);
         notificationArea.setItemRenderer(new NotificationRenderer());
-        notificationArea.setList(notifications);
+
+        notificationArea.bindList(new ReadOnlyBinding<List<Notification>>() {
+            @Override
+            public List<Notification> get() {
+                EntityRef client = localPlayer.getClientEntity();
+                return Optional.ofNullable(client.getComponent(NotificationComponent.class))
+                        .map(NotificationComponent::getNotifications)
+                        .orElse(Collections.emptyList());
+            }
+        });
+    }
+
+    @Override
+    public void onClosed() {
+        super.onClosed();
+        notificationArea.setItemRenderer(null);
     }
 
     @Override
@@ -38,15 +63,5 @@ public class NotificationAreaOverlay extends CoreScreenLayer {
     @Override
     public boolean isEscapeToCloseAllowed() {
         return false;
-    }
-
-    public void add(Notification notification) {
-        if (notifications.stream().noneMatch(n -> n.getId().equals(notification.getId()))) {
-            notifications.add(notification);
-        }
-    }
-
-    public void remove(String id) {
-        notifications.removeIf(notification -> notification.getId().equals(id));
     }
 }

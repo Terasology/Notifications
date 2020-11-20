@@ -9,6 +9,9 @@ import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.logic.console.commandSystem.annotations.Command;
 import org.terasology.logic.console.commandSystem.annotations.CommandParam;
 import org.terasology.logic.console.commandSystem.annotations.Sender;
+import org.terasology.notifications.events.AddNotificationEvent;
+import org.terasology.notifications.events.RemoveNotificationEvent;
+import org.terasology.notifications.model.Notification;
 
 import java.util.UUID;
 
