@@ -1,0 +1,28 @@
+{
+    "type" : "Notifications:NotificationAreaOverlay",
+    "contents" : {
+        "type" : "relativeLayout",
+        "skin" : "engine:notification",
+        "contents" : [
+            {
+                "type" : "columnLayout",
+                "contents" : [
+                    {
+                        "type" : "UIList",
+                        "id" : "notificationArea"
+                    }
+                ],
+                "layoutInfo" : {
+                    "use-content-width" : true,
+                    "use-content-height" : true,
+                    "position-right" : {
+                        "offset": 8
+                    },
+                    "position-top" : {
+                        "offset": 8
+                    }
+                }
+            }
+        ]
+    }
+}

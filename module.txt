@@ -1,0 +1,9 @@
+{
+    "id" : "Notifications",
+    "version" : "0.1.0-SNAPSHOT",
+    "author" : "The Terasology Foundation",
+    "displayName" : "Notifications",
+    "description" : "",
+    "dependencies" : [],
+    "serverSideOnly" : false
+}
