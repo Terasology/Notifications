@@ -16,6 +16,15 @@ import org.terasology.utilities.Assets;
 
 import java.util.Optional;
 
+/**
+ * A customized renderer for {@link Notification}, based on
+ * {@link org.terasology.nui.itemRendering.StringTextIconRenderer
+ * StringTextIconRenderer}.
+ * <p>
+ * This will render a notification message with a fixed layout and size.
+ * <p>
+ * TODO: allow to adjust how notifications are rendered my modules.
+ */
 public class NotificationRenderer extends AbstractItemRenderer<TimedNotification> {
     private final int margin;
 
@@ -64,6 +73,12 @@ public class NotificationRenderer extends AbstractItemRenderer<TimedNotification
         canvas.drawText(subtitle, subtitleRegion);
     }
 
+    /**
+     * Compute the alpha value for the given {@link TimedNotification} based on the current time to fade it in or out.
+     *
+     * @param notification the notification with timing/expiration information
+     * @return the alpha value in range [0...1]
+     */
     private float computeAlpha(TimedNotification notification) {
         long currentTime = time.getGameTimeInMs();
 
