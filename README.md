@@ -12,6 +12,7 @@ The system currently only reacts to events without keeping the state of notifica
 ## Usage
 
 To show or hide notifications from other modules add a dependency in `module.txt`:
+
 ```json5
   { "id": "Notifications", "minVersion": "0.1.0-SNAPSHOT" }
 ```
@@ -26,7 +27,8 @@ fixed developers should pay attention that the text fits into the available spac
 
 ![Notification Overlay](docs/notification.jpg)
 
-Showing and hiding notifications is controlled via events. 
+Showing and hiding notifications is controlled via events. See the description below for a quick overview. You can find
+more detailed information in the JavaDoc.
 
 - `ShowNotificationEvent(notification)` - A request to show a notification to the player in the notification overlay area.
     This event should be targeted at a client entity (an entity with `ClientComponent`). If not specified otherwise 
@@ -36,8 +38,8 @@ Showing and hiding notifications is controlled via events.
     It is recommended to show a notification for at least 10 seconds to give the player the chance to notice it. The 
     event may be consumed to prevent the message from showing. If a notification with the same `id` is already shown 
     this event is ignored.
-- `RemoveNotificationEvent(id)` - removes a notification for the entity it is sent to if present. Otherwise, this event
-    is ignored.
+- `ExpireNotificationEvent(id)` - removes a notification for the entity it is sent to if present. Otherwise, this event
+    is ignored. If not otherwise specified, the notification will be slowly faded out.
 
 ## Customization
 
@@ -46,4 +48,3 @@ be modified via asset override or asset delta to adjust the location where the n
 
 The layout of a notification message is defined by `NotificationRenderer` and only be changed directly in that renderer
 class for now. The message box has a fixed size, regardless of the content.
-

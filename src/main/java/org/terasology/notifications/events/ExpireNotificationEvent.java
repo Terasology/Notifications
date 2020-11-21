@@ -13,7 +13,7 @@ import org.terasology.notifications.model.TimedNotification;
  * This event should be targeted at a client entity (an entity with {@link org.terasology.network.ClientComponent}). If
  * there is a notification in the overlay with the given id it will be removed. Otherwise, this event will be ignored.
  * <p>
- * If not specified otherwise the notification is removed immediately.
+ * If not specified otherwise the notification is removed after the default fade-out time.
  */
 public class ExpireNotificationEvent extends AbstractConsumableEvent {
 
