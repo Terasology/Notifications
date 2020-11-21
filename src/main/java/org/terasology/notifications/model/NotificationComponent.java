@@ -11,18 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Not for public access! Managed by {@link org.terasology.notifications.NotificationClientSystem}
+ * [INTERNAL] Not for public access! Managed by {@link org.terasology.notifications.NotificationClientSystem}
  * <p>
  * Please use {@link ShowNotificationEvent} and {@link ExpireNotificationEvent} to modify the displayed notifications.
  */
 public class NotificationComponent implements Component {
+    /**
+     * The ordered list of notifications to show in the notification overlay.
+     */
     public List<TimedNotification> notifications;
 
     public NotificationComponent() {
         notifications = new ArrayList<>();
-    }
-
-    public List<TimedNotification> getNotifications() {
-        return notifications;
     }
 }

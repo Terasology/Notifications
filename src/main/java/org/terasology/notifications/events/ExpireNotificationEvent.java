@@ -4,8 +4,8 @@
 package org.terasology.notifications.events;
 
 import org.terasology.entitySystem.event.AbstractConsumableEvent;
+import org.terasology.notifications.model.Constants;
 import org.terasology.notifications.model.Notification;
-import org.terasology.notifications.model.TimedNotification;
 
 /**
  * A request to remove a {@link Notification} from the notification overlay area.
@@ -16,11 +16,6 @@ import org.terasology.notifications.model.TimedNotification;
  * If not specified otherwise the notification is removed after the default fade-out time.
  */
 public class ExpireNotificationEvent extends AbstractConsumableEvent {
-
-    /**
-     * Constant to denote that the notification should be expired and removed immediately.
-     */
-    public static final long IMMEDIATELY = 0;
 
     /**
      * The id of the {@link Notification} to be removed.
@@ -38,13 +33,13 @@ public class ExpireNotificationEvent extends AbstractConsumableEvent {
      * @param id the id of the notification to expire
      */
     public ExpireNotificationEvent(String id) {
-        this(id, TimedNotification.DEFAULT_FADE_OUT_TIME);
+        this(id, Constants.DEFAULT_FADE_OUT_TIME);
     }
 
     /**
      * Request to expire a specific notification from the overlay after the given time.
      * <p>
-     * Use {@link ExpireNotificationEvent#IMMEDIATELY} to directly expire a notification and remove it from the
+     * Use {@link Constants#IMMEDIATE} to directly expire a notification and remove it from the
      * overlay.
      *
      * @param id the id of the notification to expire

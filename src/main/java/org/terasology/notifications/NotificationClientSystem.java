@@ -14,6 +14,7 @@ import org.terasology.logic.players.LocalPlayer;
 import org.terasology.network.ClientComponent;
 import org.terasology.notifications.events.ExpireNotificationEvent;
 import org.terasology.notifications.events.ShowNotificationEvent;
+import org.terasology.notifications.model.Constants;
 import org.terasology.notifications.model.NotificationComponent;
 import org.terasology.notifications.model.TimedNotification;
 import org.terasology.notifications.ui.NotificationAreaOverlay;
@@ -58,7 +59,7 @@ public class NotificationClientSystem extends BaseComponentSystem implements Upd
             EntityRef client = localPlayer.getClientEntity();
             client.updateComponent(NotificationComponent.class, component -> {
                 final List<TimedNotification> expired = component.notifications.stream()
-                        .filter(notification -> notification.getExpires() > 0 && notification.getExpires() < current)
+                        .filter(notification -> notification.hasExpired(current))
                         .collect(Collectors.toList());
                 component.notifications.removeAll(expired);
 
@@ -81,7 +82,7 @@ public class NotificationClientSystem extends BaseComponentSystem implements Upd
             if (component.notifications.stream().noneMatch(n -> n.getContent().getId().equals(event.notification.getId()))) {
                 long expires;
                 if (event.duration < 0) {
-                    expires = ShowNotificationEvent.INDEFINITELY;
+                    expires = Constants.NEVER;
                 } else {
                     expires = time.getGameTimeInMs() + event.duration;
                 }
@@ -99,7 +100,7 @@ public class NotificationClientSystem extends BaseComponentSystem implements Upd
         entity.updateComponent(NotificationComponent.class, component -> {
             component.notifications.stream()
                     .filter(n -> n.getContent().getId().equals(event.id))
-                    .forEach(timedNotification -> timedNotification.setExpires(time.getGameTimeInMs() + event.expiresIn));
+                    .forEach(timedNotification -> timedNotification.setExpiresAt(time.getGameTimeInMs() + event.expiresIn));
             return component;
         });
     }

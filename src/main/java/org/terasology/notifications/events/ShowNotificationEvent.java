@@ -4,6 +4,7 @@
 package org.terasology.notifications.events;
 
 import org.terasology.entitySystem.event.AbstractConsumableEvent;
+import org.terasology.notifications.model.Constants;
 import org.terasology.notifications.model.Notification;
 
 /**
@@ -14,25 +15,13 @@ import org.terasology.notifications.model.Notification;
  * notification in in-game time (ms).
  * <p>
  * It is recommended to show a notification for at least 10 seconds to give the player the chance to notice it. See
- * {@link ShowNotificationEvent#RECOMMENDED_DURATION}.
+ * {@link Constants#RECOMMENDED_DURATION}.
  * <p>
  * The event may be consumed to prevent the message from showing.
  *
  * @see org.terasology.notifications.NotificationClientSystem NotificationClientSystem
  */
 public class ShowNotificationEvent extends AbstractConsumableEvent {
-
-    /**
-     * Constant to indicate that the notification should be shown indefinitely.
-     */
-    public static final long INDEFINITELY = -1;
-
-    /**
-     * Constant denoting the recommended duration volatile notifications should be visible on screen.
-     * <p>
-     * Duration as milliseconds (of in-game time).
-     */
-    public static final long RECOMMENDED_DURATION = 10000;
 
     /**
      * The notification to show to the player.
@@ -50,7 +39,7 @@ public class ShowNotificationEvent extends AbstractConsumableEvent {
      * @param notification the notification to show
      */
     public ShowNotificationEvent(Notification notification) {
-        this(notification, INDEFINITELY);
+        this(notification, Constants.NEVER);
     }
 
     /**

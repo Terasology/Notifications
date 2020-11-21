@@ -35,8 +35,8 @@ public class NotificationRenderer extends AbstractItemRenderer<TimedNotification
         canvas.setAlpha(computeAlpha(notification));
         // Drawing the icon
         UITextureRegion texture =
-                Optional.ofNullable(notification.getContent().getIcon())
-                        .flatMap(iconUri -> Assets.getTextureRegion(notification.getContent().getIcon()))
+                Optional.ofNullable(notification.getContent().getIconUri())
+                        .flatMap(iconUri -> Assets.getTextureRegion(notification.getContent().getIconUri()))
                         .orElse(null);
         if (texture != null) {
             canvas.drawTexture(texture, RectUtility.createFromMinAndSize(margin, margin, 64, 64));
@@ -67,12 +67,12 @@ public class NotificationRenderer extends AbstractItemRenderer<TimedNotification
     private float computeAlpha(TimedNotification notification) {
         long currentTime = time.getGameTimeInMs();
 
-        long timeSinceAdded = currentTime - notification.getAdded();
+        long timeSinceAdded = currentTime - notification.getAddedAt();
         if (timeSinceAdded < notification.getFadeInTime()) {
             return timeSinceAdded / (float) notification.getFadeInTime();
         }
 
-        long timeUntilExpires = notification.getExpires() - currentTime;
+        long timeUntilExpires = notification.getExpiresAt() - currentTime;
         if (timeUntilExpires > 0 && timeUntilExpires < notification.getFadeOutTime()) {
             return timeUntilExpires / (float) notification.getFadeOutTime();
         }

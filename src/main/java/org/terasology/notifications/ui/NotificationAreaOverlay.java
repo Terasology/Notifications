@@ -39,7 +39,7 @@ public class NotificationAreaOverlay extends CoreScreenLayer {
             public List<TimedNotification> get() {
                 EntityRef client = localPlayer.getClientEntity();
                 return Optional.ofNullable(client.getComponent(NotificationComponent.class))
-                        .map(NotificationComponent::getNotifications)
+                        .map(component -> component.notifications)
                         .orElse(Collections.emptyList());
             }
         });

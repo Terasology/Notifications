@@ -11,6 +11,7 @@ import org.terasology.logic.console.commandSystem.annotations.CommandParam;
 import org.terasology.logic.console.commandSystem.annotations.Sender;
 import org.terasology.notifications.events.ExpireNotificationEvent;
 import org.terasology.notifications.events.ShowNotificationEvent;
+import org.terasology.notifications.model.Constants;
 import org.terasology.notifications.model.Notification;
 
 import java.util.Optional;
@@ -44,7 +45,7 @@ public class NotificationCommands extends BaseComponentSystem {
             @CommandParam(value = "id") String id,
             @CommandParam(value = "expiresIn", required = false) Long expiresIn) {
         sender.send(new ExpireNotificationEvent(id,
-                Optional.ofNullable(expiresIn).orElse(ExpireNotificationEvent.IMMEDIATELY)));
+                Optional.ofNullable(expiresIn).orElse(Constants.IMMEDIATE)));
     }
 
 }
