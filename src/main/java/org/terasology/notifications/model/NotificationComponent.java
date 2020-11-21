@@ -17,16 +17,13 @@ import java.util.Map;
  * org.terasology.notifications.events.RemoveNotificationEvent} to modify the displayed notifications.
  */
 public class NotificationComponent implements Component {
-    public List<Notification> notifications;
-    public Map<String, Long> notificationEndTimes;
-    public long nextEndTime = Long.MAX_VALUE;
+    public List<TimedNotification> notifications;
 
     public NotificationComponent() {
         notifications = new ArrayList<>();
-        notificationEndTimes = new HashMap<>();
     }
 
-    public List<Notification> getNotifications() {
+    public List<TimedNotification> getNotifications() {
         return notifications;
     }
 }

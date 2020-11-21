@@ -2,7 +2,7 @@
     "type" : "Notifications:NotificationAreaOverlay",
     "contents" : {
         "type" : "relativeLayout",
-        "skin" : "engine:notification",
+        "skin" : "engine:default",
         "contents" : [
             {
                 "type" : "columnLayout",

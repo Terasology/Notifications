@@ -4,17 +4,17 @@
 package org.terasology.notifications.ui;
 
 import org.terasology.assets.ResourceUrn;
+import org.terasology.engine.Time;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.logic.players.LocalPlayer;
-import org.terasology.notifications.model.Notification;
 import org.terasology.notifications.model.NotificationComponent;
+import org.terasology.notifications.model.TimedNotification;
 import org.terasology.nui.databinding.ReadOnlyBinding;
 import org.terasology.nui.widgets.UIList;
 import org.terasology.registry.In;
 import org.terasology.rendering.nui.CoreScreenLayer;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,18 +24,19 @@ public class NotificationAreaOverlay extends CoreScreenLayer {
 
     @In
     LocalPlayer localPlayer;
+    @In
+    Time time;
 
-    private List<Notification> notifications = new LinkedList<>();
-    private UIList<Notification> notificationArea;
+    private UIList<TimedNotification> notificationArea;
 
     @Override
     public void initialise() {
         notificationArea = find("notificationArea", UIList.class);
-        notificationArea.setItemRenderer(new NotificationRenderer());
+        notificationArea.setItemRenderer(new NotificationRenderer(time));
 
-        notificationArea.bindList(new ReadOnlyBinding<List<Notification>>() {
+        notificationArea.bindList(new ReadOnlyBinding<List<TimedNotification>>() {
             @Override
-            public List<Notification> get() {
+            public List<TimedNotification> get() {
                 EntityRef client = localPlayer.getClientEntity();
                 return Optional.ofNullable(client.getComponent(NotificationComponent.class))
                         .map(NotificationComponent::getNotifications)

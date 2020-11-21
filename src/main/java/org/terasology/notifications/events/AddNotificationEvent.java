@@ -11,6 +11,7 @@ public class AddNotificationEvent extends AbstractConsumableEvent {
     public static final long EXPIRES_NEVER = -1;
 
     public Notification notification;
+    // track 'expires' or 'duration'?
     public long expires;
 
     public AddNotificationEvent(Notification notification) {

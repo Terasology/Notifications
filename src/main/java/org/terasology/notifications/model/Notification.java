@@ -15,9 +15,7 @@ public class Notification {
     }
 
     public Notification(String id, String title, String icon) {
-        this.id = id;
-        this.title = title;
-        this.icon = icon;
+        this(id, title, null, icon);
     }
 
     public Notification(String id, String title, String subtitle, String icon) {
