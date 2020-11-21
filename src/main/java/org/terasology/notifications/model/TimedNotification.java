@@ -4,17 +4,23 @@
 package org.terasology.notifications.model;
 
 public class TimedNotification {
-    public static final int FADE_IN_TIME = 100;
-    public static final int FADE_OUT_TIME = 5000;
+    public static final int DEFAULT_FADE_IN_TIME = 100;
+    public static final int DEFAULT_FADE_OUT_TIME = 5000;
 
     private Notification content;
     private long added;
     private long expires;
 
+    private long fadeInTime;
+    private long fadeOutTime;
+
     public TimedNotification(Notification content, long added, long expires) {
         this.content = content;
         this.added = added;
         this.expires = expires;
+
+        this.fadeInTime = DEFAULT_FADE_IN_TIME;
+        this.fadeOutTime = DEFAULT_FADE_OUT_TIME;
     }
 
     public Notification getContent() {
@@ -39,5 +45,21 @@ public class TimedNotification {
 
     public void setExpires(long expires) {
         this.expires = expires;
+    }
+
+    public long getFadeInTime() {
+        return fadeInTime;
+    }
+
+    public void setFadeInTime(long fadeInTime) {
+        this.fadeInTime = fadeInTime;
+    }
+
+    public long getFadeOutTime() {
+        return fadeOutTime;
+    }
+
+    public void setFadeOutTime(long fadeOutTime) {
+        this.fadeOutTime = fadeOutTime;
     }
 }

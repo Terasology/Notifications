@@ -63,13 +63,13 @@ public class NotificationRenderer extends AbstractItemRenderer<TimedNotification
         long currentTime = time.getGameTimeInMs();
 
         long timeSinceAdded = currentTime - notification.getAdded();
-        if (timeSinceAdded < TimedNotification.FADE_IN_TIME) {
-            return timeSinceAdded / (float) TimedNotification.FADE_IN_TIME;
+        if (timeSinceAdded < notification.getFadeInTime()) {
+            return timeSinceAdded / (float) notification.getFadeInTime();
         }
 
         long timeUntilExpires = notification.getExpires() - currentTime;
-        if (timeUntilExpires < TimedNotification.FADE_OUT_TIME) {
-            return timeUntilExpires / (float) TimedNotification.FADE_OUT_TIME;
+        if (timeUntilExpires < notification.getFadeOutTime()) {
+            return timeUntilExpires / (float) notification.getFadeOutTime();
         }
 
         return 1f;
