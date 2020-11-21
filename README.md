@@ -1,5 +1,5 @@
 <p align="center">
-<img src="./banner.png" alt="Notifications"/>
+<img src="./docs/banner.png" alt="Notifications"/>
 </p>
 
 # Notifications
@@ -24,14 +24,26 @@ A notification may contain an _icon_, displayed on the left. There is room for t
 a `subtitle`. See the image below for a visual representation of a notification. As the size of the notification box is
 fixed developers should pay attention that the text fits into the available space.
 
-![](notification.jpg)
+![Notification Overlay](docs/notification.jpg)
 
 Showing and hiding notifications is controlled via events. 
 
-- `AddNotificationEvent(notification)` - is send to a client entity (and entity with `ClientComponent`). The event may 
-    be consumed to prevent the message from showing. If a notification with the same `id` is already shown this event is
-    ignored.
+- `ShowNotificationEvent(notification)` - A request to show a notification to the player in the notification overlay area.
+    This event should be targeted at a client entity (an entity with `ClientComponent`). If not specified otherwise 
+    notifications will be shown indefinitely. The event allows to set the duration of the notification in in-game
+    time (ms).
+    
+    It is recommended to show a notification for at least 10 seconds to give the player the chance to notice it. The 
+    event may be consumed to prevent the message from showing. If a notification with the same `id` is already shown 
+    this event is ignored.
 - `RemoveNotificationEvent(id)` - removes a notification for the entity it is sent to if present. Otherwise, this event
     is ignored.
 
+## Customization
+
+Customization of the notification system is currently limited. The UI screen `assets/ui/NotificationAreaOverlay.ui` can
+be modified via asset override or asset delta to adjust the location where the notification overlay is displayed.
+
+The layout of a notification message is defined by `NotificationRenderer` and only be changed directly in that renderer
+class for now. The message box has a fixed size, regardless of the content.
 
