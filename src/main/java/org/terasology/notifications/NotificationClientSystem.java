@@ -3,11 +3,14 @@
 
 package org.terasology.notifications;
 
+import org.terasology.engine.Time;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.event.ReceiveEvent;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
+import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
+import org.terasology.logic.players.LocalPlayer;
 import org.terasology.network.ClientComponent;
 import org.terasology.notifications.events.AddNotificationEvent;
 import org.terasology.notifications.events.RemoveNotificationEvent;
@@ -17,13 +20,27 @@ import org.terasology.notifications.ui.NotificationAreaOverlay;
 import org.terasology.registry.In;
 import org.terasology.rendering.nui.NUIManager;
 
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RegisterSystem(RegisterMode.CLIENT)
-public class NotificationClientSystem extends BaseComponentSystem {
+public class NotificationClientSystem extends BaseComponentSystem implements UpdateSubscriberSystem {
+
+    private static final int CHECK_INTERVAL = 200;
 
     @In
     private NUIManager nuiManager;
+
+    @In
+    private Time time;
+
+    @In
+    LocalPlayer localPlayer;
+
+    private long lastCheck;
 
     private NotificationAreaOverlay overlay;
 
@@ -35,6 +52,37 @@ public class NotificationClientSystem extends BaseComponentSystem {
     @Override
     public void shutdown() {
         nuiManager.closeScreen(overlay);
+    }
+
+    @Override
+    public void update(float delta) {
+        long current = time.getGameTimeInMs();
+        if (current > lastCheck + CHECK_INTERVAL) {
+            EntityRef client = localPlayer.getClientEntity();
+            client.updateComponent(NotificationComponent.class, component -> {
+                final List<String> expired = component.notificationEndTimes.entrySet().stream()
+                        .filter(entry -> entry.getValue() > 0)
+                        .filter(entry -> entry.getValue() < current)
+                        .map(Map.Entry::getKey)
+                        .collect(Collectors.toList());
+
+                component.notifications.removeIf(n -> expired.contains(n.getId()));
+
+                if (component.notifications.isEmpty()) {
+                    return null;
+                } else {
+                    expired.forEach(id -> component.notificationEndTimes.remove(id));
+                    component.nextEndTime =
+                            component.notificationEndTimes.values().stream()
+                                    .filter(endTime -> endTime > 0)
+                                    .sorted()
+                                    .findFirst()
+                                    .orElse(Long.MAX_VALUE);
+                    return component;
+                }
+            });
+            lastCheck = current;
+        }
     }
 
     private static Function<NotificationComponent, NotificationComponent> addNotification(final Notification notification, long expires) {
