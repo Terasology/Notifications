@@ -4,17 +4,16 @@
 package org.terasology.notifications.model;
 
 import org.terasology.entitySystem.Component;
+import org.terasology.notifications.events.ExpireNotificationEvent;
+import org.terasology.notifications.events.ShowNotificationEvent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Not for public access! Managed by {@link org.terasology.notifications.NotificationClientSystem}
  * <p>
- * Please use {@link org.terasology.notifications.events.AddNotificationEvent} and {@link
- * org.terasology.notifications.events.RemoveNotificationEvent} to modify the displayed notifications.
+ * Please use {@link ShowNotificationEvent} and {@link ExpireNotificationEvent} to modify the displayed notifications.
  */
 public class NotificationComponent implements Component {
     public List<TimedNotification> notifications;

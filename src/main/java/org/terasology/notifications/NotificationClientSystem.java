@@ -12,8 +12,8 @@ import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.logic.players.LocalPlayer;
 import org.terasology.network.ClientComponent;
-import org.terasology.notifications.events.AddNotificationEvent;
-import org.terasology.notifications.events.RemoveNotificationEvent;
+import org.terasology.notifications.events.ExpireNotificationEvent;
+import org.terasology.notifications.events.ShowNotificationEvent;
 import org.terasology.notifications.model.NotificationComponent;
 import org.terasology.notifications.model.TimedNotification;
 import org.terasology.notifications.ui.NotificationAreaOverlay;
@@ -73,15 +73,21 @@ public class NotificationClientSystem extends BaseComponentSystem implements Upd
     }
 
     @ReceiveEvent(components = ClientComponent.class)
-    public void onNotificationAdded(AddNotificationEvent event, EntityRef entity) {
+    public void onNotificationAdded(ShowNotificationEvent event, EntityRef entity) {
         if (!entity.hasComponent(NotificationComponent.class)) {
             entity.addComponent(new NotificationComponent());
         }
         entity.updateComponent(NotificationComponent.class, component -> {
             if (component.notifications.stream().noneMatch(n -> n.getContent().getId().equals(event.notification.getId()))) {
-                //TODO: ensure end time is after start time
+                long expires;
+                if (event.duration < 0) {
+                    expires = ShowNotificationEvent.INDEFINITELY;
+                } else {
+                    expires = time.getGameTimeInMs() + event.duration;
+                }
+
                 TimedNotification timedNotification = new TimedNotification(event.notification,
-                        time.getGameTimeInMs(), event.expires);
+                        time.getGameTimeInMs(), expires);
                 component.notifications.add(timedNotification);
             }
             return component;
@@ -89,15 +95,12 @@ public class NotificationClientSystem extends BaseComponentSystem implements Upd
     }
 
     @ReceiveEvent(components = ClientComponent.class)
-    public void onNotificationRemoved(RemoveNotificationEvent event, EntityRef entity) {
+    public void onNotificationRemoved(ExpireNotificationEvent event, EntityRef entity) {
         entity.updateComponent(NotificationComponent.class, component -> {
-            component.notifications.removeIf(n -> n.getContent().getId().equals(event.id));
-
-            if (component.notifications.isEmpty()) {
-                return null;
-            } else {
-                return component;
-            }
+            component.notifications.stream()
+                    .filter(n -> n.getContent().getId().equals(event.id))
+                    .forEach(timedNotification -> timedNotification.setExpires(time.getGameTimeInMs() + event.expiresIn));
+            return component;
         });
     }
 }

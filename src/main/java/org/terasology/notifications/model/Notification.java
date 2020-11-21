@@ -3,6 +3,8 @@
 
 package org.terasology.notifications.model;
 
+import com.google.common.base.Preconditions;
+
 public class Notification {
     private final String id;
 
@@ -19,6 +21,7 @@ public class Notification {
     }
 
     public Notification(String id, String title, String subtitle, String icon) {
+        Preconditions.checkNotNull(id);
         this.id = id;
         this.title = title;
         this.subtitle = subtitle;
@@ -26,7 +29,7 @@ public class Notification {
     }
 
     public String getTitle() {
-        return title;
+        return title == null ? "" : title;
     }
 
     public void setTitle(String title) {
@@ -34,7 +37,7 @@ public class Notification {
     }
 
     public String getSubtitle() {
-        return subtitle;
+        return subtitle == null ? "" : subtitle;
     }
 
     public void setSubtitle(String subtitle) {

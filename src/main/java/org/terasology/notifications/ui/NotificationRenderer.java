@@ -14,6 +14,8 @@ import org.terasology.nui.itemRendering.AbstractItemRenderer;
 import org.terasology.nui.util.RectUtility;
 import org.terasology.utilities.Assets;
 
+import java.util.Optional;
+
 public class NotificationRenderer extends AbstractItemRenderer<TimedNotification> {
     private final int margin;
 
@@ -32,7 +34,10 @@ public class NotificationRenderer extends AbstractItemRenderer<TimedNotification
     public void draw(TimedNotification notification, Canvas canvas) {
         canvas.setAlpha(computeAlpha(notification));
         // Drawing the icon
-        UITextureRegion texture = Assets.getTextureRegion(notification.getContent().getIcon()).orElse(null);
+        UITextureRegion texture =
+                Optional.ofNullable(notification.getContent().getIcon())
+                        .flatMap(iconUri -> Assets.getTextureRegion(notification.getContent().getIcon()))
+                        .orElse(null);
         if (texture != null) {
             canvas.drawTexture(texture, RectUtility.createFromMinAndSize(margin, margin, 64, 64));
         }
@@ -68,7 +73,7 @@ public class NotificationRenderer extends AbstractItemRenderer<TimedNotification
         }
 
         long timeUntilExpires = notification.getExpires() - currentTime;
-        if (timeUntilExpires < notification.getFadeOutTime()) {
+        if (timeUntilExpires > 0 && timeUntilExpires < notification.getFadeOutTime()) {
             return timeUntilExpires / (float) notification.getFadeOutTime();
         }
 
