@@ -1,6 +1,7 @@
 {
   "id": "Notifications",
   "version": "0.1.0",
+  "isReleaseManaged": true,
   "author": "The Terasology Foundation",
   "displayName": "Notifications",
   "description": "Show notifications like achievements or other information.",
