@@ -32,8 +32,13 @@ public class NotificationAreaOverlay extends CoreScreenLayer {
     @Override
     public void initialise() {
         notificationArea = find("notificationArea", UIList.class);
+        notificationArea.setInteractive(false);
+        notificationArea.setCanBeFocus(false);
         notificationArea.setItemRenderer(new NotificationRenderer(time));
 
+        // This binding will do a lookup of the currently active notifications stored in the NotificationComponent of
+        // the client entity associated with the local player. That way the list is automatically updated every time the
+        // binding is recomputed.
         notificationArea.bindList(new ReadOnlyBinding<List<TimedNotification>>() {
             @Override
             public List<TimedNotification> get() {
@@ -43,12 +48,6 @@ public class NotificationAreaOverlay extends CoreScreenLayer {
                         .orElse(Collections.emptyList());
             }
         });
-    }
-
-    @Override
-    public void onClosed() {
-        super.onClosed();
-        notificationArea.setItemRenderer(null);
     }
 
     @Override
