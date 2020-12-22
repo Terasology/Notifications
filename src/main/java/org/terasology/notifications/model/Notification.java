@@ -5,6 +5,8 @@ package org.terasology.notifications.model;
 
 import com.google.common.base.Preconditions;
 
+import java.util.UUID;
+
 /**
  * A notification message to be displayed to the user.
  * <p>
@@ -22,12 +24,30 @@ public class Notification {
     private String iconUri;
 
     /**
+     * Create an empty notification with random UUID.
+     */
+    public Notification() {
+        this(UUID.randomUUID().toString());
+    }
+
+    /**
      * Create an empty notification.
      *
      * @param id the identifier for this notification
      */
     public Notification(String id) {
         this(id, "", "", null);
+    }
+
+    /**
+     * Create a complete notification with random UUID.
+     *
+     * @param title the title text
+     * @param subtitle the subtitle text
+     * @param iconUri the URI of the icon to display, may be {@code null}
+     */
+    public Notification(String title, String subtitle, String iconUri) {
+        this(UUID.randomUUID().toString(), title, subtitle, iconUri);
     }
 
     /**
