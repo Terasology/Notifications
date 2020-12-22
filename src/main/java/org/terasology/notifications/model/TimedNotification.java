@@ -23,6 +23,7 @@ public class TimedNotification {
 
     /**
      * The time at which this notification expires in in-game time (ms).
+     * A negative value like {@link Constants#NEVER} denotes that this notification never expires.
      */
     private long expiresAt;
 
@@ -68,7 +69,7 @@ public class TimedNotification {
     public Notification getContent() {
         return content;
     }
-    
+
     public void setContent(Notification content) {
         this.content = content;
     }
@@ -78,6 +79,13 @@ public class TimedNotification {
      */
     public long getAddedAt() {
         return addedAt;
+    }
+
+    /**
+     * Whether this notification expires, i.e., whether {@link #getExpiresAt()} is non-negative.
+     */
+    public boolean expires() {
+        return expiresAt >= 0;
     }
 
     /**
