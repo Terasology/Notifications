@@ -3,7 +3,7 @@
 
 package org.terasology.notifications.ui;
 
-import org.joml.Rectanglei;
+import org.terasology.joml.geom.Rectanglei;
 import org.joml.Vector2i;
 import org.terasology.engine.Time;
 import org.terasology.notifications.model.Notification;
