@@ -4,15 +4,15 @@
 package org.terasology.notifications.ui;
 
 import org.terasology.assets.ResourceUrn;
-import org.terasology.engine.Time;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.logic.players.LocalPlayer;
+import org.terasology.engine.core.Time;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.logic.players.LocalPlayer;
+import org.terasology.engine.registry.In;
+import org.terasology.engine.rendering.nui.CoreScreenLayer;
 import org.terasology.notifications.model.NotificationComponent;
 import org.terasology.notifications.model.TimedNotification;
 import org.terasology.nui.databinding.ReadOnlyBinding;
 import org.terasology.nui.widgets.UIList;
-import org.terasology.registry.In;
-import org.terasology.rendering.nui.CoreScreenLayer;
 
 import java.util.Collections;
 import java.util.List;

@@ -3,14 +3,14 @@
 
 package org.terasology.notifications.events;
 
-import org.terasology.entitySystem.event.AbstractConsumableEvent;
+import org.terasology.engine.entitySystem.event.AbstractConsumableEvent;
 import org.terasology.notifications.model.Constants;
 import org.terasology.notifications.model.Notification;
 
 /**
  * A request to remove a {@link Notification} from the notification overlay area.
  * <p>
- * This event should be targeted at a client entity (an entity with {@link org.terasology.network.ClientComponent}). If
+ * This event should be targeted at a client entity (an entity with {@link org.terasology.engine.network.ClientComponent}). If
  * there is a notification in the overlay with the given id it will be removed. Otherwise, this event will be ignored.
  * <p>
  * If not specified otherwise the notification is removed after the default fade-out time.

@@ -3,15 +3,17 @@
 
 package org.terasology.notifications;
 
-import org.terasology.engine.Time;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.event.ReceiveEvent;
-import org.terasology.entitySystem.systems.BaseComponentSystem;
-import org.terasology.entitySystem.systems.RegisterMode;
-import org.terasology.entitySystem.systems.RegisterSystem;
-import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
-import org.terasology.logic.players.LocalPlayer;
-import org.terasology.network.ClientComponent;
+import org.terasology.engine.core.Time;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.entitySystem.event.ReceiveEvent;
+import org.terasology.engine.entitySystem.systems.BaseComponentSystem;
+import org.terasology.engine.entitySystem.systems.RegisterMode;
+import org.terasology.engine.entitySystem.systems.RegisterSystem;
+import org.terasology.engine.entitySystem.systems.UpdateSubscriberSystem;
+import org.terasology.engine.logic.players.LocalPlayer;
+import org.terasology.engine.network.ClientComponent;
+import org.terasology.engine.registry.In;
+import org.terasology.engine.rendering.nui.NUIManager;
 import org.terasology.notifications.events.ExpireNotificationEvent;
 import org.terasology.notifications.events.ShowNotificationEvent;
 import org.terasology.notifications.model.Constants;
@@ -19,8 +21,6 @@ import org.terasology.notifications.model.Notification;
 import org.terasology.notifications.model.NotificationComponent;
 import org.terasology.notifications.model.TimedNotification;
 import org.terasology.notifications.ui.NotificationAreaOverlay;
-import org.terasology.registry.In;
-import org.terasology.rendering.nui.NUIManager;
 
 import java.util.List;
 import java.util.stream.Collectors;

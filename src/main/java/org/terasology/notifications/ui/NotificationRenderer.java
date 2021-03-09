@@ -3,16 +3,16 @@
 
 package org.terasology.notifications.ui;
 
-import org.terasology.joml.geom.Rectanglei;
 import org.joml.Vector2i;
-import org.terasology.engine.Time;
+import org.terasology.engine.core.Time;
+import org.terasology.engine.utilities.Assets;
+import org.terasology.joml.geom.Rectanglei;
 import org.terasology.notifications.model.Notification;
 import org.terasology.notifications.model.TimedNotification;
 import org.terasology.nui.Canvas;
 import org.terasology.nui.UITextureRegion;
 import org.terasology.nui.itemRendering.AbstractItemRenderer;
 import org.terasology.nui.util.RectUtility;
-import org.terasology.utilities.Assets;
 
 import java.util.Optional;
 

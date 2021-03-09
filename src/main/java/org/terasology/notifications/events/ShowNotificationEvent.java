@@ -3,14 +3,14 @@
 
 package org.terasology.notifications.events;
 
-import org.terasology.entitySystem.event.AbstractConsumableEvent;
+import org.terasology.engine.entitySystem.event.AbstractConsumableEvent;
 import org.terasology.notifications.model.Constants;
 import org.terasology.notifications.model.Notification;
 
 /**
  * A request to show a {@link Notification} to the player in the notification overlay area.
  * <p>
- * This event should be targeted at a client entity (an entity with {@link org.terasology.network.ClientComponent}). If
+ * This event should be targeted at a client entity (an entity with {@link org.terasology.engine.network.ClientComponent}). If
  * not specified otherwise notifications will be shown indefinitely. This event allows to set the expiration time of the
  * notification in in-game time (ms).
  * <p>
