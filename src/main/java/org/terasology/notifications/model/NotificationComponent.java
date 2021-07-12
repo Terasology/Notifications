@@ -24,4 +24,10 @@ public class NotificationComponent implements Component<NotificationComponent> {
     public NotificationComponent() {
         notifications = new ArrayList<>();
     }
+
+    @Override
+    public void copy(NotificationComponent other) {
+        notifications.clear();
+        notifications.addAll(other.notifications);
+    }
 }
