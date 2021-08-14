@@ -26,7 +26,7 @@ public class NotificationComponent implements Component<NotificationComponent> {
     }
 
     @Override
-    public void copy(NotificationComponent other) {
+    public void copyFrom(NotificationComponent other) {
         notifications.clear();
         notifications.addAll(other.notifications);
     }
