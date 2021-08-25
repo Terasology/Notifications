@@ -14,6 +14,7 @@ import org.terasology.notifications.model.TimedNotification;
 import org.terasology.nui.databinding.ReadOnlyBinding;
 import org.terasology.nui.widgets.UIList;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -43,9 +44,10 @@ public class NotificationAreaOverlay extends CoreScreenLayer {
             @Override
             public List<TimedNotification> get() {
                 EntityRef client = localPlayer.getClientEntity();
-                return Optional.ofNullable(client.getComponent(NotificationComponent.class))
+                List<TimedNotification> timedNotifications = Optional.ofNullable(client.getComponent(NotificationComponent.class))
                         .map(component -> component.notifications)
                         .orElse(Collections.emptyList());
+                return timedNotifications;
             }
         });
     }
